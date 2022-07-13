@@ -1,4 +1,4 @@
-package br.com.controller;
+package br.com.soccer.controller;
 
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.client.HttpClient;

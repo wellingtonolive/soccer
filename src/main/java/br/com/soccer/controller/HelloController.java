@@ -1,4 +1,4 @@
-package br.com.controller;
+package br.com.soccer.controller;
 
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;

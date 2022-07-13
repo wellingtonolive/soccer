@@ -1,4 +1,4 @@
-package br.com;
+package br.com.soccer;
 
 import io.micronaut.runtime.Micronaut;
 

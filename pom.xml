@@ -19,7 +19,7 @@
     <release.version>11</release.version>
     <micronaut.version>3.5.3</micronaut.version>
     <micronaut.runtime>netty</micronaut.runtime>
-    <exec.mainClass>br.com.Application</exec.mainClass>
+    <exec.mainClass>br.com.soccer.Application</exec.mainClass>
   </properties>
 
   <repositories>
