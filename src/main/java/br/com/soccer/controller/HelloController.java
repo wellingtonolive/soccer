@@ -1,16 +1,17 @@
 package br.com.soccer.controller;
 
-import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.Produces;
 
-@Controller("/hello")
+import java.util.Collections;
+import java.util.Map;
+
+@Controller
 public class HelloController {
 
     @Get
-    @Produces(MediaType.TEXT_PLAIN)
-    public String index(){
-        return "Welcome to Micronaut";
+    public Map<String, Object> index(){
+
+        return Collections.singletonMap("message", "Welcome to Micronaut");
     }
 }

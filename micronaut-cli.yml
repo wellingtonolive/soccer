@@ -3,4 +3,4 @@ defaultPackage: br.com
 testFramework: junit
 sourceLanguage: java
 buildTool: maven
-features: [annotation-api, app-name, http-client, jackson-databind, java, java-application, junit, logback, maven, netty-server, readme, shade, yaml]
+features: [amazon-api-gateway, annotation-api, app-name, aws-lambda, jackson-databind, java, java-application, junit, logback, maven, readme, shade, yaml]

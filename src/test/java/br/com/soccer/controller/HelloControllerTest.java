@@ -1,28 +1,49 @@
 package br.com.soccer.controller;
 
-import io.micronaut.http.HttpRequest;
-import io.micronaut.http.client.HttpClient;
-import io.micronaut.http.client.annotation.Client;
+import com.amazonaws.serverless.exceptions.ContainerInitializationException;
+import com.amazonaws.serverless.proxy.internal.testutils.MockLambdaContext;
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
+import com.amazonaws.serverless.proxy.model.AwsProxyResponse;
+import com.amazonaws.services.lambda.runtime.Context;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import io.micronaut.function.aws.proxy.MicronautLambdaHandler;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import jakarta.inject.Inject;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @MicronautTest
 public class HelloControllerTest {
 
-    @Inject
-    @Client("/")
-    HttpClient httpClient;
+    private static MicronautLambdaHandler handler;
+    private static Context lambdaContext = new MockLambdaContext();
+
+    @BeforeAll
+    public static void setupSpec() {
+        try {
+            handler = new MicronautLambdaHandler();
+        } catch (ContainerInitializationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @AfterAll
+    public static void cleanupSpec() {
+        handler.getApplicationContext().close();
+    }
 
     @Test
-    public void testIndex(){
-        HttpRequest<String> request = HttpRequest.GET("/hello");
-        String body = httpClient.toBlocking().retrieve(request);
-
-        assertNotNull(body);
-        assertEquals("Welcome to Micronaut", body);
+    void testHandler() throws JsonProcessingException {
+        AwsProxyRequest request = new AwsProxyRequest();
+        request.setHttpMethod("GET");
+        request.setPath("/");
+        AwsProxyResponse response = handler.handleRequest(request, lambdaContext);
+        assertEquals(200, response.getStatusCode());
+        assertEquals("{\"message\":\"Welcome to Micronaut\"}",  response.getBody());
     }
+
+
+
 }
